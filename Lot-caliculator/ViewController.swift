@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class ViewController: UIViewController {
 
@@ -18,23 +19,27 @@ class ViewController: UIViewController {
         self.InputE.keyboardType = UIKeyboardType.numberPad
         self.InputD.keyboardType = UIKeyboardType.numberPad
         
+        lottButtonLabel.backgroundColor = UIColor.blue
+        lottButtonLabel.layer.cornerRadius = 10.0
+        lottButtonLabel.setTitleColor(UIColor.white, for: .normal)
+        
         InputA.text = ""
         InputB.text = ""
-        InputC.text = ""
+        InputC.text = "未計算"
         InputE.text = ""
         InputD.text = ""
-        InputF.text = ""
+        InputF.text = "未計算"
+        
+        bannerView.adUnitID = "ca-app-pub-4439113960692957/8673486771"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
     }
 
     func Loss(){
         if InputA.text! == ""||InputB.text! == ""{
-            InputC.text = "資金or損切(%)入力漏れ｡"
-            print("good")
+            InputC.text = "入力漏れ有り｡"
         }else{
-            print(InputA.text)
-            print(InputB.text)
-            print("bad")
-        InputC.text =  "\(String(Double(InputA.text!)!*Double(InputB.text!)!/100))円"
+        InputC.text =  String(Double(InputA.text!)!*Double(InputB.text!)!/100)
         }
     }
     
@@ -42,7 +47,7 @@ class ViewController: UIViewController {
         if InputA.text! == ""||InputB.text! == ""||InputE.text! == ""||InputD.text! == ""{
             InputF.text = "入力漏れ有り｡"
         }else{
-        InputF.text = "\(String(Double(InputA.text!)!*Double(InputB.text!)!/100/Double(InputE.text!)!/Double(InputD.text!)!))Lot"
+        InputF.text = String(Double(InputA.text!)!*Double(InputB.text!)!/1000/Double(InputE.text!)!/Double(InputD.text!)!)
         }
     }
     
@@ -51,15 +56,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var InputB: UITextField!
     @IBOutlet weak var InputE: UITextField!
     @IBOutlet weak var InputD: UITextField!
-    @IBAction func lossCaliculateButton(_ sender: Any) {
-        Loss()
-    }
-    @IBOutlet weak var lossButtonLabel: UIButton!
+    
     @IBOutlet weak var InputC: UILabel!
     @IBOutlet weak var InputF: UILabel!
     @IBAction func lottCaliculate(_ sender: Any) {
+        Loss()
         Lott()
     }
+    @IBOutlet weak var lottButtonLabel: UIButton!
+    @IBAction func tapScreen(_ sender: Any) {
+        self.view.endEditing(true)
+    }
+    @IBOutlet weak var bannerView: GADBannerView!
     
 }
 
