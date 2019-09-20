@@ -38,7 +38,11 @@ class ViewController: UIViewController {
     func Loss(){
         if InputA.text! == ""||InputB.text! == ""{
             InputC.text = "入力漏れ有り｡"
-        }else{
+        }
+        else if Double(InputB.text!)! > 100{
+            InputC.text = "損切は100以下"
+        }
+        else{
         InputC.text =  String(Double(InputA.text!)!*Double(InputB.text!)!/100)
         }
     }
@@ -46,7 +50,11 @@ class ViewController: UIViewController {
     func Lott(){
         if InputA.text! == ""||InputB.text! == ""||InputE.text! == ""||InputD.text! == ""{
             InputF.text = "入力漏れ有り｡"
-        }else{
+        }
+        else if Double(InputB.text!)! > 100{
+            InputF.text = "損切は100以下"
+        }
+        else{
         InputF.text = String(Double(InputA.text!)!*Double(InputB.text!)!/1000/Double(InputE.text!)!/Double(InputD.text!)!)
         }
     }
